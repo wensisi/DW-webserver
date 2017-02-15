@@ -1,0 +1,235 @@
+@charset "utf-8";
+body,html{
+	width: 100%;
+	height: 100%;
+}
+html, body, div, span, h1, h2, h3, button, p,img, small, strong, b, i,form, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+li{
+	list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+.clear{zoom: 1;}
+.clear:after{
+	content: "";
+	height: 0;
+	padding: 0;
+	clear: both;
+	display: block;
+}
+.container{
+	width: 100%;
+	height: 100%;
+	background:url(../img/login-bg.png) no-repeat center center;
+}
+.login-logo{
+	padding-top: 1.0rem;
+	padding-bottom: 0.6rem;
+	text-align: center;
+}
+.login-logo img{
+	width: 2.64rem;
+	height: 2.64rem;
+	border-radius: 1.32rem;
+}
+.login-wrap{
+	width: 7.07rem;
+	height: 6.77rem;
+	margin:0 auto;
+	padding: 1rem 0.8rem 0.4rem;
+	position: relative;
+}
+.login-bg{
+	position: absolute;
+	left: 0rem;
+	top: 0rem;
+	width: 8.67rem;
+	height: 8.17rem;
+	background: #6ab8e9;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+}
+.login-wrap ul{
+	position: absolute;
+	z-index: 3;
+}
+.login-wrap ul li
+{
+	height: 1.23rem;
+	line-height: 1.23rem;
+	margin-bottom: 0.49rem;
+	border-radius: 0.612rem;
+}
+.login-wrap ul li.user{
+	padding-left: 2.27rem;
+	background:#fff url(../img/menu-icon_03.png) no-repeat 0.86rem center;
+}
+.login-wrap ul li.passwords{
+	padding-left: 2.27rem;
+	background:#fff url(../img/menu-icon_06.png) no-repeat 0.86rem center;
+}
+.login-wrap ul li input{
+	height: 80%;
+	width: 80%;
+	border:none;
+	/*background: #233040;*/
+	/*color: white;*/
+}
+.login-wrap ul li button{
+	width: 100%;
+	height: 100%;
+	border:none;
+	background: #0088ff;
+	color: white;
+	font-size: 0.4923rem;
+	border-radius: 0.612rem;
+}
+.login-wrap a{
+	 display: inline-block;
+	 float: left;
+	 width: 50%;
+	 font-size: 0.4615rem;
+	 color: white;
+}
+.login-wrap a.register{
+	text-align: right;
+}
+.login-bottom{
+	position: absolute;
+	left: 50%;
+	bottom: 0.9538rem;
+	width: 7.07rem;
+	margin-left: -3.535rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid #fff;
+}
+.login-bottom ul li{
+	float: left;
+	width: 25%;
+	text-align: center;
+}
+.login-bottom ul li a{
+	display: inline-block;
+	width: 0.7692rem;
+	height: 0.5538rem;
+}
+.login-bottom img{
+	width: 0.6769rem;
+	height: 0.6769rem;
+}
+.dialog-header{
+	height: 1.5348rem;
+	line-height: 1.5348rem;
+	background:-webkit-linear-gradient(top,#dde0e4,#b3b8bf);
+}
+.dialog-header ul li{
+	float: left;
+	height: 100%;
+}
+.dialog-header ul li.state-menu{
+	width: 15%;
+	padding: 0 5%;
+	background-image:url(../img/list-bg_01.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+	/*background-size: */
+}
+.dialog-header ul li.title{
+	width: 55%;
+	text-align: center;
+}
+.dialog-header ul li.user-photo{
+	width: 12%;
+	padding: 0 4%;
+	height: 1.5348rem;
+	background-image:url(../img/list-bg_01.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+.state-menu button{
+	display: inline-block;
+ 	width: 25%;
+}
+.state-menu img{
+	width: 0.3943rem;
+	height: 0.3942rem;
+}
+.user-photo img{
+	height: 1.2rem;
+	width: 1.2rem;
+	vertical-align: middle;
+}
+.chat-box{
+	width: 100%;
+	height: 100%;
+	background: #d2d5da;;
+}
+.chat-menu{
+	width: 25%;
+	height: 100%;
+	background: #53a6f3;
+	float:left;
+	color: white;
+}
+.chat-menu ul li{
+	height: 1rem;
+	padding-left:8%;
+}
+.chat-detail{
+	width: 75%;
+	float: right;
+}
+.chat-section {
+	width: 100%;
+    height: 85%;
+}
+.chat-section .chat-detail{
+	height:100%;
+	background: #fff;
+}
+.chat-section .message{
+	/*border:1px solid #2f5470;*/
+	height: 80%;
+}
+.input-style
+{
+	width: 100%;
+	height: 1%;
+	background: #e5e5e5;
+}
+.input-box{
+	height:19%;
+}
+.input-box .input{
+	float: left;
+	width: 70%;
+	height: 100%;
+}
+.input-box .input input{
+	width: 100%;
+	height: 100%;
+	border:none;
+}
+.input-box .action{
+	float: left;
+	width: 30%;
+	height: 100%;
+}
+.input-box .action button{
+	width: 100%;
+	height: 100%;
+	background: #e5e5e5;
+}
