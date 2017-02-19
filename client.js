@@ -164,10 +164,11 @@
 		_initialEmoji: function() {
 	    var emojiContainer = document.getElementById('emojiWrapper'),
 	        docFragment = document.createDocumentFragment();
-	    for (var i = 3; i > 0; i--) {
+	    for (var i = 4; i >0; i--) {
 	        var emojiItem = document.createElement('img');
-	        emojiItem.src = 'emo/' + i + '.gif';
+	        emojiItem.src = 'emo/' + i + '.png';
 	        emojiItem.title = i;
+	        emojiItem.style.height = "1rem";
 	        docFragment.appendChild(emojiItem);
 	    }
 	    emojiContainer.appendChild(docFragment);
