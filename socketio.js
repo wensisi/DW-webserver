@@ -56,7 +56,6 @@ io.on('connection', function(socket){
 		io.emit('message', obj);
 		console.log(obj.username+'说：'+obj.content);
 	});
-
 	//监听用户发送图片
 	socket.on("img",function(obj){
 		io.emit("img",obj);

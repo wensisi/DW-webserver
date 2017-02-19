@@ -27,7 +27,7 @@
 		//提交聊天消息内容
 		submit:function(_obj){
 			console.log(_obj);
-			var content = d.getElementById("content").value;
+			var content = d.getElementById("content").value +d.getElementById("emoji").getAttribute("data-value");
 			if(content != '' || _obj.file !=""){
 				var obj = {
 					userid: this.userid,
@@ -131,7 +131,7 @@
 				}
 				else
 				{
-				var contentDiv = '<div>'+obj.content+'</div>';
+				var contentDiv = '<div>'+_showEmoji(obj.content)+'</div>';
 				}
 				
 				var section = d.createElement('section');
@@ -145,7 +145,23 @@
 				section.style.fontSize = obj.fontsize;
 				section.style.color = obj.color;
 				CHAT.msgObj.appendChild(section);
-				CHAT.scrollToBottom();	
+				CHAT.scrollToBottom();
+
+				function _showEmoji(msg) {
+				    var match, result = msg,
+				        reg = /\[emoji:\d+\]/g,
+				        emojiIndex,
+				        totalEmojiNum = document.getElementById('emojiWrapper').children.length;
+				    while (match = reg.exec(msg)) {
+				        emojiIndex = match[0].slice(7, -1);
+				        if (emojiIndex > totalEmojiNum) {
+				            result = result.replace(match[0], '[X]');
+				        } else {
+				            result = result.replace(match[0], '<img class="emoji" src="emo/' + emojiIndex + '.png" />');
+				        };
+				    };
+				    return result;
+				}	
 			});
 			this._initialEmoji();
 			 document.getElementById('emoji').addEventListener('click', function(e) {
@@ -168,11 +184,11 @@
 	        var emojiItem = document.createElement('img');
 	        emojiItem.src = 'emo/' + i + '.png';
 	        emojiItem.title = i;
-	        emojiItem.style.height = "1rem";
 	        docFragment.appendChild(emojiItem);
 	    }
 	    emojiContainer.appendChild(docFragment);
-	}
+	},
+	
 	};
 	//通过“回车”提交用户名
 	d.getElementById("username").onkeydown = function(e) {
@@ -216,5 +232,14 @@
          };
 	});
 
+	d.getElementById('emojiWrapper').addEventListener('click', function(e) {
+    //获取被点击的表情
+    var target = e.target;
+    if (target.nodeName.toLowerCase() == 'img') {
+        var messageInput = d.getElementById('emoji');
+        // messageInput.focus();
+        messageInput.setAttribute("data-value",messageInput.getAttribute("data-value") + '[emoji:' + target.title + ']');
+    };
+}, false);
 
 })();
