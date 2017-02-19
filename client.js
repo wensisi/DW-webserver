@@ -25,13 +25,18 @@
 			location.reload();
 		},
 		//提交聊天消息内容
-		submit:function(){
+		submit:function(_obj){
+			console.log(_obj);
 			var content = d.getElementById("content").value;
-			if(content != ''){
+			if(content != '' || _obj.file !=""){
 				var obj = {
 					userid: this.userid,
 					username: this.username,
-					content: content
+					fontsize:_obj.fsize,
+					color:_obj.color,
+					content: content,
+					fileflag:_obj.fileflag,
+					file:_obj.file
 				};
 				this.socket.emit('message', obj);
 				d.getElementById("content").value = '';
@@ -55,23 +60,22 @@
 			var separator = '';
 			for(key in onlineUsers) {
 		        if(onlineUsers.hasOwnProperty(key)){
-					userhtml += separator+onlineUsers[key];
-					separator = '、';
+					userhtml += "<li>"+onlineUsers[key]+"</li>";
 				}
 		    }
 			// d.getElementById("onlinecount").innerHTML = '当前共有 '+onlineCount+' 人在线，在线列表：'+userhtml;
-			
+			d.getElementById("onlinecount").innerHTML = userhtml;
 			//添加系统消息
 			var html = '';
 			html += '<div class="msg-system">';
 			html += user.username;
-			html += (action == 'login') ? ' 加入了聊天室' : ' 退出了聊天室';
+			html += (action == 'login') ? '加入聊天' : ' 退出了聊天室';
 			html += '</div>';
 			var section = d.createElement('section');
 			section.className = 'system J-mjrlinkWrap J-cutMsg';
 			section.innerHTML = html;
-			d.getElementById("onlinecount").innerHTML = html;
-			// this.msgObj.appendChild(section);	
+			// d.getElementById("upstate").innerHTML = html;
+			this.msgObj.appendChild(section);	
 			this.scrollToBottom();
 		},
 		//第一个界面用户提交用户名
@@ -92,8 +96,8 @@
 			*/
 			this.userid = this.genUid();
 			this.username = username;
-			
-			d.getElementById("showusername").innerHTML = this.username;
+			 d.getElementById("showusername").innerHTML='<li>'+this.username+'</li>';
+
 			this.msgObj.style.minHeight = (this.screenheight - db.clientHeight + this.msgObj.clientHeight) + "px";
 			this.scrollToBottom();
 			
@@ -116,9 +120,19 @@
 			
 			//监听消息发送
 			this.socket.on('message', function(obj){
+				var time = new Date();
+				var nowtime = time.getHours()+":"+time.getMinutes()+":"+time.getSeconds();
+				console.log("nowtime",nowtime);
 				var isme = (obj.userid == CHAT.userid) ? true : false;
+				var usernameDiv = '<div>'+obj.username+" "+nowtime+'</div>';
+				if(obj.fileflag)
+				{
+				var contentDiv = '<div><img src='+obj.file+' /></div>';	
+				}
+				else
+				{
 				var contentDiv = '<div>'+obj.content+'</div>';
-				var usernameDiv = '<span>'+obj.username+'</span>';
+				}
 				
 				var section = d.createElement('section');
 				if(isme){
@@ -128,11 +142,36 @@
 					section.className = 'service';
 					section.innerHTML = usernameDiv + contentDiv;
 				}
+				section.style.fontSize = obj.fontsize;
+				section.style.color = obj.color;
 				CHAT.msgObj.appendChild(section);
 				CHAT.scrollToBottom();	
 			});
+			this._initialEmoji();
+			 document.getElementById('emoji').addEventListener('click', function(e) {
+			     var emojiwrapper = document.getElementById('emojiWrapper');
+			     emojiwrapper.style.display = 'block';
+			     e.stopPropagation();
+			 }, false);
+			 document.body.addEventListener('click', function(e) {
+			     var emojiwrapper = document.getElementById('emojiWrapper');
+			     if (e.target != emojiwrapper) {
+			         emojiwrapper.style.display = 'none';
+			     }
+			 });
 
-		}
+		},
+		_initialEmoji: function() {
+	    var emojiContainer = document.getElementById('emojiWrapper'),
+	        docFragment = document.createDocumentFragment();
+	    for (var i = 3; i > 0; i--) {
+	        var emojiItem = document.createElement('img');
+	        emojiItem.src = 'emo/' + i + '.gif';
+	        emojiItem.title = i;
+	        docFragment.appendChild(emojiItem);
+	    }
+	    emojiContainer.appendChild(docFragment);
+	}
 	};
 	//通过“回车”提交用户名
 	d.getElementById("username").onkeydown = function(e) {
@@ -142,10 +181,39 @@
 		}
 	};
 	//通过“回车”提交信息
+	var user_set = {
+		fsize :"",
+		color:"",
+		fileflag:false
+	};
 	d.getElementById("content").onkeydown = function(e) {
 		e = e || event;
 		if (e.keyCode === 13) {
-			CHAT.submit();
+			user_set.fsize = "45px";
+			user_set.color = "#08af67";
+			CHAT.submit(user_set);
 		}
 	};
+	//通过点击发送消息
+	d.getElementById("mjr_send").addEventListener("click",function(){
+		user_set.fsize = "0.48rem";
+		user_set.color = d.getElementById("colorStyle").value;
+		CHAT.submit(user_set);
+	}); 
+	d.getElementById("get_image").addEventListener("change",function(){
+		user_set.fileflag = true;
+		var reader = new FileReader();
+		reader.readAsDataURL(this.files[0]);
+		reader.onload = function(e) {
+            //读取成功，显示到页面并发送到服务器
+             this.value = '';
+              user_set.file = e.target.result;
+              console.log("base64",e.target.result);
+              console.log("data",user_set);
+              CHAT.submit(user_set);
+              user_set.fileflag = false;
+         };
+	});
+
+
 })();

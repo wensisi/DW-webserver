@@ -1,10 +1,12 @@
+var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.get('/', function(req, res){
-	res.send('<h1>Welcome Realtime Server</h1>');
-});
+// app.get('/', function(req, res){
+// 	res.send('<h1>Welcome Realtime Server</h1>');
+// });
+app.use("/",express.static(__dirname));
 
 //在线用户
 var onlineUsers = {};
@@ -53,6 +55,12 @@ io.on('connection', function(socket){
 		//向所有客户端广播发布的消息
 		io.emit('message', obj);
 		console.log(obj.username+'说：'+obj.content);
+	});
+
+	//监听用户发送图片
+	socket.on("img",function(obj){
+		io.emit("img",obj);
+		console.log(obj.username+"发送图");
 	});
   
 });

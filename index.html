@@ -1,174 +1,78 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<style>
-a{ margin:5px;}
-</style>
-<script>
-window.onload = function(){
-	
-	page({
-	
-		id : 'div1',
-		nowNum : 7,
-		allNum : 10,
-		callBack : function(now,all){
-		
-			alert('当前页:' + now +',总共页:'+all);
-		
-		}
-	
-	});
-	
-};
-
-function page(opt){
-
-	if(!opt.id){return false};
-	
-	var obj = document.getElementById(opt.id);
-	
-	var nowNum = opt.nowNum || 1;
-	var allNum = opt.allNum || 5;
-	var callBack = opt.callBack || function(){};
-	
-	if( nowNum>=4 && allNum>=6 ){
-	
-		var oA = document.createElement('a');
-		oA.href = '#1';
-		oA.innerHTML = '首页';
-		obj.appendChild(oA);
-	
-	}
-	
-	if(nowNum>=2){
-		var oA = document.createElement('a');
-		oA.href = '#' + (nowNum - 1);
-		oA.innerHTML = '上一页';
-		obj.appendChild(oA);
-	}
-	
-	if(allNum<=5){
-		for(var i=1;i<=allNum;i++){
-			var oA = document.createElement('a');
-			oA.href = '#' + i;
-			if(nowNum == i){
-				oA.innerHTML = i;
-			}
-			else{
-				oA.innerHTML = '['+ i +']';
-			}
-			obj.appendChild(oA);
-		}	
-	}
-	else{
-	
-		for(var i=1;i<=5;i++){
-			var oA = document.createElement('a');
-			
-			
-			if(nowNum == 1 || nowNum == 2){
-				
-				oA.href = '#' + i;
-				if(nowNum == i){
-					oA.innerHTML = i;
-				}
-				else{
-					oA.innerHTML = '['+ i +']';
-				}
-				
-			}
-			else if( (allNum - nowNum) == 0 || (allNum - nowNum) == 1 ){
-			
-				oA.href = '#' + (allNum - 5 + i);
-				
-				if((allNum - nowNum) == 0 && i==5){
-					oA.innerHTML = (allNum - 5 + i);
-				}
-				else if((allNum - nowNum) == 1 && i==4){
-					oA.innerHTML = (allNum - 5 + i);
-				}
-				else{
-					oA.innerHTML = '['+ (allNum - 5 + i) +']';
-				}
-			
-			}
-			else{
-				oA.href = '#' + (nowNum - 3 + i);
-				
-				if(i==3){
-					oA.innerHTML = (nowNum - 3 + i);
-				}
-				else{
-					oA.innerHTML = '['+ (nowNum - 3 + i) +']';
-				}
-			}
-			obj.appendChild(oA);
-			
-		}
-	
-	}
-	
-	if( (allNum - nowNum) >= 1 ){
-		var oA = document.createElement('a');
-		oA.href = '#' + (nowNum + 1);
-		oA.innerHTML = '下一页';
-		obj.appendChild(oA);
-	}
-	
-	if( (allNum - nowNum) >= 3 && allNum>=6 ){
-	
-		var oA = document.createElement('a');
-		oA.href = '#' + allNum;
-		oA.innerHTML = '尾页';
-		obj.appendChild(oA);
-	
-	}
-	
-	callBack(nowNum,allNum);
-	
-	var aA = obj.getElementsByTagName('a');
-	
-	for(var i=0;i<aA.length;i++){
-		aA[i].onclick = function(){
-			
-			var nowNum = parseInt(this.getAttribute('href').substring(1));
-			
-			obj.innerHTML = '';
-			
-			page({
-			
-				id : opt.id,
-				nowNum : nowNum,
-				allNum : allNum,
-				callBack : callBack
-			
-			});
-			
-			return false;
-			
-		};
-	}
-
-}
-</script>
+<meta charset="utf-8">
+	<title>登陆</title>
+	<!-- <meta name="format-decetion" content="telephone=no"/>
+	<meta name="format-decetion" content="email=no"/>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport"> -->
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<script type="text/javascript" src="js/flexible.min.js"></script>
+	 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 </head>
-
 <body>
-<div id="div1">
-	<!--<a href="#1">首页</a>
-	<a href="#3">上一页</a>
-	<a href="#2">[2]</a>
-	<a href="#3">[3]</a>
-	<a href="#4">4</a>
-	<a href="#5">[5]</a>
-	<a href="#6">[6]</a>
-	<a href="#5">下一页</a>
-	<a href="#10">尾页</a>-->
-	
-
+<div  id="loginbox"  class="container" style="display:;">
+	<div class="login-logo">
+		<img src="img/photo.png">
+	</div>
+	<div class="login-wrap">
+	<div class="login-bg"></div>  
+		<ul>
+			<li class="user"><input type="text" name="" id="username"></li>
+			<li class="passwords"><input type="text" name=""></li>
+			<li><button type="button" onclick="CHAT.usernameSubmit();">登&nbsp;&nbsp;&nbsp;&nbsp;陆</button></li>
+			<li><a href="#">忘记密码</a><a href="#" class="register">注册</a></li>
+		</ul>
+	</div>
+	<div class="login-bottom">
+		<ul class="clear">
+			<li><a href="#"><img src="img/QQ.png"></a></li>
+			<li><a href="#"><img src="img/weixin.png"></a></li>
+			<li><a href="#"><img src="img/weibo.png"></a></li>
+			<li><a href="#"><img src="img/taobao.png"></a></li>
+		</ul>
+	</div>
 </div>
+<div id="chatbox" class="chat-box" style="display:none;">
+	<div class="dialog-header">
+	<ul class="clear">
+		<li class="state-menu"><button id="active" type="button"><img src="img/state-icon_01.png"></button>
+			<button id="unline" type="button"><img src="img/state-icon_02.png"></button>
+			<button id="exit" type="button"><img src="img/state-icon_03.png"></button></li>
+		<li class="title"><span id="title-show">欢迎加入聊天室</span></li>
+		<li class="user-photo"><img src="img/photo.png"></li>
+	</ul>
+	</div>
+	<div id="doc" class="chat-section clear">
+		<div class="chat-menu">
+			<ul class="clear" id="onlinecount">
+			</ul>
+		</div>
+	    <div id="chat" class="chat-detail">  
+	        <div id="message" class="message" style="overflow-y: scroll;"><div id="upstate"></div>
+	        </div>
+	        <div class="input-style"><input type="file" name="" id="get_image"><input type="color" name="" id="colorStyle"><input id="emojiWrapper" type="button" name="" value="表情"><button id="emoji" type="button">添加</button></div>
+	        <div class="input-box">
+	            <div class="input">
+	            <input type="text" maxlength="140" placeholder="按Ctrl提交" id="content" name="content">
+	            </div>
+	            <div class="action">
+	                <button type="button" id="mjr_send">发送</button>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="chat-right" style="display: ;">
+	                   <div class="username">  
+	                       <span id="showusername"></span> | 
+	                       <a href="javascript:;" onclick="CHAT.logout()" >退出</a>
+	                   </div>
+	               </div>
+	</div>
+</div>
+<script type="text/javascript" src="client.js"></script>
+<script type="text/javascript">
+	// var tit = document.getElementById('title-show');
+
+</script>
 </body>
 </html>
