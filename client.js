@@ -27,13 +27,14 @@
 		//提交聊天消息内容
 		submit:function(_obj){
 			console.log(_obj);
-			var content = d.getElementById("content").value +d.getElementById("emoji").getAttribute("data-value");
+			var content = d.getElementById("content").value;
 			if(content != '' || _obj.file !=""){
 				var obj = {
 					userid: this.userid,
 					username: this.username,
-					fontsize:_obj.fsize,
+					fsize:_obj.fsize,
 					color:_obj.color,
+					fstyle:_obj.fstyle,
 					content: content,
 					fileflag:_obj.fileflag,
 					file:_obj.file
@@ -124,26 +125,30 @@
 				var nowtime = time.getHours()+":"+time.getMinutes()+":"+time.getSeconds();
 				console.log("nowtime",nowtime);
 				var isme = (obj.userid == CHAT.userid) ? true : false;
-				var usernameDiv = '<div>'+obj.username+" "+nowtime+'</div>';
+				var usernameDiv = '<div style="color:#0867af;font-size:0.32rem;">'+obj.username+" "+nowtime+'</div>';
 				if(obj.fileflag)
 				{
 				var contentDiv = '<div><img src='+obj.file+' /></div>';	
 				}
 				else
 				{
-				var contentDiv = '<div>'+_showEmoji(obj.content)+'</div>';
+				var contentDiv = '<div style="padding-left:0.2rem;">'+_showEmoji(obj.content)+'</div>';
 				}
 				
 				var section = d.createElement('section');
+				section.style.padding = "0.1rem 0.2rem";
+				console.log(isme);
 				if(isme){
 					section.className = 'user';
-					section.innerHTML = contentDiv + usernameDiv;
-				} else {
+					section.innerHTML = usernameDiv + contentDiv;
+					section.style.textAlign = "right";
+				} else {  
 					section.className = 'service';
 					section.innerHTML = usernameDiv + contentDiv;
 				}
-				section.style.fontSize = obj.fontsize;
+				section.style.fontSize = obj.fsize;
 				section.style.color = obj.color;
+				section.style.fontStyle = obj.fstyle;
 				CHAT.msgObj.appendChild(section);
 				CHAT.scrollToBottom();
 
@@ -157,7 +162,7 @@
 				        if (emojiIndex > totalEmojiNum) {
 				            result = result.replace(match[0], '[X]');
 				        } else {
-				            result = result.replace(match[0], '<img class="emoji" src="emo/' + emojiIndex + '.png" />');
+				            result = result.replace(match[0], '<img class="emoji" src="emo/' + emojiIndex + '.gif" />');
 				        };
 				    };
 				    return result;
@@ -182,7 +187,7 @@
 	        docFragment = document.createDocumentFragment();
 	    for (var i = 4; i >0; i--) {
 	        var emojiItem = document.createElement('img');
-	        emojiItem.src = 'emo/' + i + '.png';
+	        emojiItem.src = 'emo/' + i + '.gif';
 	        emojiItem.title = i;
 	        docFragment.appendChild(emojiItem);
 	    }
@@ -199,22 +204,21 @@
 	};
 	//通过“回车”提交信息
 	var user_set = {
-		fsize :"",
+		fsize :"0.32rem",
 		color:"",
+		fstyle:"",
 		fileflag:false
 	};
 	d.getElementById("content").onkeydown = function(e) {
 		e = e || event;
 		if (e.keyCode === 13) {
-			user_set.fsize = "45px";
-			user_set.color = "#08af67";
 			CHAT.submit(user_set);
 		}
 	};
 	//通过点击发送消息
 	d.getElementById("mjr_send").addEventListener("click",function(){
-		user_set.fsize = "0.48rem";
 		user_set.color = d.getElementById("colorStyle").value;
+		console.log(user_set);
 		CHAT.submit(user_set);
 	}); 
 	d.getElementById("get_image").addEventListener("change",function(){
@@ -231,15 +235,50 @@
               user_set.fileflag = false;
          };
 	});
+	/*d.getElementById("add_images").addEventListener("click",function(){
+		var input_image = document.createEvent("MouseEvents");//
+		input_image.initEvent('click', false, true);
+		
+		d.getElementById("get_image").dispatchEvent(input_image);
+		user_set.fileflag = true;
+		var reader = new FileReader(); console.log(d.getElementById("get_image").files[0]);
+		reader.readAsDataURL(d.getElementById("get_image").files[0]);
 
+		reader.onload = function(e) {
+        //读取成功，显示到页面并发送到服务器
+         this.value = '';
+          user_set.file = e.target.result;
+          console.log("base64",e.target.result);
+          console.log("data",user_set);
+          CHAT.submit(user_set);
+          user_set.fileflag = false;
+     };
+		
+	});*/
 	d.getElementById('emojiWrapper').addEventListener('click', function(e) {
     //获取被点击的表情
     var target = e.target;
     if (target.nodeName.toLowerCase() == 'img') {
-        var messageInput = d.getElementById('emoji');
+        var messageInput = d.getElementById('content');
         // messageInput.focus();
-        messageInput.setAttribute("data-value",messageInput.getAttribute("data-value") + '[emoji:' + target.title + ']');
+        messageInput.value +=  '[emoji:' + target.title + ']';
+        // messageInput.setAttribute("data-value",messageInput.getAttribute("data-value") + '[emoji:' + target.title + ']');
     };
-}, false);
+  }, false);
+
+	d.getElementById("font-diy").addEventListener("click",function(){
+		if(this.style.fontStyle == "normal")
+		{
+			this.style.fontStyle = "italic";
+			user_set.fstyle = "italic";
+		}
+		else{
+			this.style.fontStyle = "normal";
+			user_set.fstyle = "normal";
+		}
+	});
+	d.getElementById("f-size").addEventListener("change",function(){
+		user_set.fsize = this.value+"rem";
+	});
 
 })();

@@ -19,7 +19,7 @@
 	<div class="login-bg"></div>  
 		<ul>
 			<li class="user"><input type="text" name="" id="username"></li>
-			<li class="passwords"><input type="text" name=""></li>
+			<li class="passwords"><input type="password" name=""></li>
 			<li><button type="button" onclick="CHAT.usernameSubmit();">登&nbsp;&nbsp;&nbsp;&nbsp;陆</button></li>
 			<li><a href="#">忘记密码</a><a href="#" class="register">注册</a></li>
 		</ul>
@@ -51,17 +51,31 @@
 	    <div id="chat" class="chat-detail">  
 	        <div id="message" class="message" style="overflow-y: scroll;"><div id="upstate"></div>
 	        </div>
-	        <div class="input-style"><input type="file" name="" id="get_image"><input type="color" name="" id="colorStyle"><div style="position:absolute;top:-4rem;height:4rem;width:4rem;display:none;" id="emojiWrapper" value="表情"></div><input type="text" name="" id="messageInput"><button id="emoji" type="button" data-value="">添加</button></div>
-	        <div class="input-box">
+	        <div class="input-style">
+ 				<input class="set-input" type="color" name="" id="colorStyle">
+	       	 	<select id="f-size" class="set-input">
+	       	 	   <option value="0.58">一号</option>
+	       	 	   <option value="0.32">二号</option>
+				   <option value="0.26">三号</option>
+	       	 	</select>
+	       	 	<button id="font-diy" class="font-diy" type="button" name="" >I</button>
+	       	 	<button id="emoji" class="emoji-input" type="button" data-value="">添加表情</button>
+	       	 	<label class="inputimage-wrap">
+		        	<input class="get-image" type="file" name="file" id="get_image" value="添加图片">
+		        	<button id="add_images" class="get-image" type="button">添加图片</button>
+		        </label>
+	       	 	<div id="emojiWrapper" class="emotion-box" value="表情"></div>
+	        </div>
+	        <div class="input-box"> 
 	            <div class="input">
-	            <input type="text" maxlength="140" placeholder="按Ctrl提交" id="content" name="content">
+	            <input type="text" maxlength="140" placeholder="可以按Ctrl提交" id="content" name="content">
 	            </div>
 	            <div class="action">
 	                <button type="button" id="mjr_send">发送</button>
 	            </div>
 	        </div>
 	    </div>
-	    <div class="chat-right" style="display: ;">
+	    <div class="chat-right" style="display:none; ">
 	                   <div class="username">  
 	                       <span id="showusername"></span> | 
 	                       <a href="javascript:;" onclick="CHAT.logout()" >退出</a>
