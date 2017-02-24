@@ -13,6 +13,7 @@
 		msgObj:d.getElementById("message"),
 		screenheight:w.innerHeight ? w.innerHeight : dx.clientHeight,
 		username:null,
+		userphoto:"",
 		userid:null,
 		socket:null,
 		//让浏览器滚动条保持在最低部
@@ -81,23 +82,31 @@
 		},
 		//第一个界面用户提交用户名
 		usernameSubmit:function(){
-			var username = d.getElementById("username").value;
+			var userinfor ={
+				username:"",
+				userpassword:"",
+				userphoto:""
+			};
+			userinfor.username = d.getElementById("username").value;
+			userinfor.userphoto = d.getElementById("user-photo").getAttribute("src");
 			if(username != ""){
 				d.getElementById("username").value = '';
 				d.getElementById("loginbox").style.display = 'none';
 				d.getElementById("chatbox").style.display = 'block';
-				this.init(username);
+				this.init(userinfor);
 			}
 			return false;
 		},
-		init:function(username){
+		init:function(userinfor){
 			/*
 			客户端根据时间和随机数生成uid,这样使得聊天室用户名称可以重复。
 			实际项目中，如果是需要用户登录，那么直接采用用户的uid来做标识就可以
 			*/
 			this.userid = this.genUid();
-			this.username = username;
-			 d.getElementById("showusername").innerHTML='<li>'+this.username+'</li>';
+			this.username = userinfor.username;
+			this.userphoto = userinfor.userphoto;
+			 // d.getElementById("showusername").innerHTML='<li>'+this.username+'</li>';
+			 d.getElementById("user-icon").setAttribute("src",this.userphoto);
 
 			this.msgObj.style.minHeight = (this.screenheight - db.clientHeight + this.msgObj.clientHeight) + "px";
 			this.scrollToBottom();
@@ -235,26 +244,7 @@
               user_set.fileflag = false;
          };
 	});
-	/*d.getElementById("add_images").addEventListener("click",function(){
-		var input_image = document.createEvent("MouseEvents");//
-		input_image.initEvent('click', false, true);
-		
-		d.getElementById("get_image").dispatchEvent(input_image);
-		user_set.fileflag = true;
-		var reader = new FileReader(); console.log(d.getElementById("get_image").files[0]);
-		reader.readAsDataURL(d.getElementById("get_image").files[0]);
-
-		reader.onload = function(e) {
-        //读取成功，显示到页面并发送到服务器
-         this.value = '';
-          user_set.file = e.target.result;
-          console.log("base64",e.target.result);
-          console.log("data",user_set);
-          CHAT.submit(user_set);
-          user_set.fileflag = false;
-     };
-		
-	});*/
+	
 	d.getElementById('emojiWrapper').addEventListener('click', function(e) {
     //获取被点击的表情
     var target = e.target;
@@ -279,6 +269,19 @@
 	});
 	d.getElementById("f-size").addEventListener("change",function(){
 		user_set.fsize = this.value+"rem";
+	});
+	d.getElementById("uploadImage").addEventListener("change",function(e){
+		var reader = new FileReader();
+		console.log(this.files[0]);
+		photo = this.files[0];
+		reader.readAsDataURL(photo);
+		console.log(reader);
+		reader.onload = function(e){
+			console.log("ok");
+			var photo = e.target.result;
+			d.getElementById("user-photo").setAttribute("src",photo);
+		};
+		
 	});
 
 })();
