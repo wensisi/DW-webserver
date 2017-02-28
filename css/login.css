@@ -36,14 +36,24 @@ a:hover {
 	background:url(../img/login-bg.png) no-repeat center center;
 }
 .login-logo{
+	position: relative;
 	padding-top: 1.0rem;
 	padding-bottom: 0.6rem;
+	height: 2.64rem;
 	text-align: center;
 }
-.login-logo img{
+.login-logo img,.login-logo input{
+	position: absolute;
+	top: 1.0rem;
+	left: 50%;
+	margin-left: -1.32rem;
 	width: 2.64rem;
 	height: 2.64rem;
 	border-radius: 1.32rem;
+}
+.login-logo input{
+	opacity: 0;
+	filter: alpha(opacity=0);
 }
 .login-wrap{
 	width: 7.07rem;
@@ -63,6 +73,7 @@ a:hover {
 	filter: alpha(opacity=60);
 }
 .login-wrap ul{
+	width: 7rem;
 	position: absolute;
 	z-index: 3;
 }
@@ -74,16 +85,16 @@ a:hover {
 	border-radius: 0.612rem;
 }
 .login-wrap ul li.user{
-	padding-left: 2.27rem;
+	padding-left: 1.67rem;
 	background:#fff url(../img/menu-icon_03.png) no-repeat 0.86rem center;
 }
 .login-wrap ul li.passwords{
-	padding-left: 2.27rem;
+	padding-left: 1.67rem;
 	background:#fff url(../img/menu-icon_06.png) no-repeat 0.86rem center;
 }
 .login-wrap ul li input{
 	height: 80%;
-	width: 80%;
+	width: 90%;
 	border:none;
 	/*background: #233040;*/
 	/*color: white;*/
@@ -151,7 +162,7 @@ a:hover {
 	width: 55%;
 	text-align: center;
 }
-.dialog-header ul li.user-photo{
+.dialog-header ul li.user-icon{
 	width: 12%;
 	padding: 0 4%;
 	height: 1.5348rem;
@@ -167,7 +178,7 @@ a:hover {
 	width: 0.3943rem;
 	height: 0.3942rem;
 }
-.user-photo img{
+.user-icon img{
 	height: 1.2rem;
 	width: 1.2rem;
 	vertical-align: middle;
