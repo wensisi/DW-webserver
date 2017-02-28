@@ -8,17 +8,18 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport"> -->
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<script type="text/javascript" src="js/flexible.min.js"></script>
-	 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+	 <script src="http://192.168.1.126:3000/socket.io/socket.io.js"></script>
 </head>
 <body>
 <div  id="loginbox"  class="container" style="display:;">
 	<div class="login-logo">
-		<img src="img/photo.png">
+		<img id="user-photo" src="img/photo.png">
+		<input id="uploadImage" name="myPhoto" type="file" capture="camera" >
 	</div>
 	<div class="login-wrap">
 	<div class="login-bg"></div>  
 		<ul>
-			<li class="user"><input type="text" name="" id="username"></li>
+			<li class="user"><input type="text" name="" id="username" value="ww"></li>
 			<li class="passwords"><input type="password" name=""></li>
 			<li><button type="button" onclick="CHAT.usernameSubmit();">登&nbsp;&nbsp;&nbsp;&nbsp;陆</button></li>
 			<li><a href="#">忘记密码</a><a href="#" class="register">注册</a></li>
@@ -38,9 +39,9 @@
 	<ul class="clear">
 		<li class="state-menu"><button id="active" type="button"><img src="img/state-icon_01.png"></button>
 			<button id="unline" type="button"><img src="img/state-icon_02.png"></button>
-			<button id="exit" type="button"><img src="img/state-icon_03.png"></button></li>
+			<button id="exit" href="javascript:;" onclick="CHAT.logout()" type="button"><img src="img/state-icon_03.png"></button></li>
 		<li class="title"><span id="title-show">欢迎加入聊天室</span></li>
-		<li class="user-photo"><img src="img/photo.png"></li>
+		<li class="user-icon"><img id="user-icon" src="img/photo.png"></li>
 	</ul>
 	</div>
 	<div id="doc" class="chat-section clear">
